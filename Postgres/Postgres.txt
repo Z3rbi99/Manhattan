@@ -1,0 +1,16 @@
+CREATE TABLE PERSONE
+(
+   ID serial,
+   Nome character varying(50),
+   Cognome character varying(50)
+);
+
+
+CREATE TABLE PROGETTI
+(
+   ID serial,
+   Nome character varying(50),
+   Descrizione character varying(250),
+   DataInizio timestamp,
+   DataFine timestamp
+);
