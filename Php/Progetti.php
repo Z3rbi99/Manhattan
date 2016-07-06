@@ -21,6 +21,7 @@
 		else
 			$dataFine = 'null';
 		
+		
 
 		if(!$conn) {
 			die('Connessione fallita !<br />');
@@ -62,6 +63,10 @@
 		else {
 			echo "<input type=\"submit\" value=\"Mostra progetti\">";
 		}
+
+		if(isset($_GET['nomeProg']) and $_GET['nomeProg']=="")
+			echo "Devi inserire almeno il nome del progetto.";
+		
 		echo "<input hidden name=\"passavar\" value=\"mostratabella\">";
 		?>
 		

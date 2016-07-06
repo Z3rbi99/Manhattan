@@ -41,8 +41,8 @@
 					</tr>';
 
 			while($pers = pg_fetch_assoc($querypersone)){
-				echo "\n\t<tr>\n\t\t<td>".$prog['id']."</td>\n\t\t<td>".$prog['nome']."</td>";
-				echo "<td>".$prog['cogn']."</td>\n\t\t</tr>";
+				echo "\n\t<tr>\n\t\t<td>".$pers['id']."</td>\n\t\t<td>".$pers['nome']."</td>";
+				echo "<td>".$pers['cognome']."</td>\n\t\t</tr>";
 			}
 			echo "\n\t<tr>\n\t\t<td></td>\n\t\t<td> <input type=\"text\" name=\"nome\" maxlength=\"50\"> </td>\n\t\t<td> <input type=\"text\" name=\"cogn\" maxlength=\"50\"> </td>";
 			echo '</table>';
@@ -51,7 +51,11 @@
 		else {
 			echo "<input type=\"submit\" value=\"Mostra persone\">";
 		}
-		echo "<input hidden name=\"passavar\" value=\"mostratabella\">";
+		
+		if(isset($_GET['nome']) and $_GET['nome']=="")
+			echo "Devi riempire tutti i campi.";
+		
+		echo "<input hidden name=\"passavar1\" value=\"mostratabella\">";
 		?>
 		</form>
 	</body>
