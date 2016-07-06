@@ -1,23 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		<!-- <script src="C:/Progetti/Manhattan/Php/jquery-3.0.0.min.js"></script>
-		 <link href="/jquery/jquery-ui-1.9.2.custom/css/ui-darkness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet"> -->
-		<meta charset="utf-8">
-		<title>jQuery UI inizioProg - Default functionality</title>
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-		<link rel="stylesheet" href="/resources/demos/style.css">
-		<script>
-			$(function() {
-				$( "#pippo" ).date picker();
-			});
-		</script>
+
+		<title>Progetti</title>
+	
 	</head>
-	
-	
-	
 	<body>
 		<?php
 		$conn = @pg_connect('dbname=postgres user=postgres password=iacopo');
@@ -68,7 +54,7 @@
 				echo "\n\t<tr>\n\t\t<td>".$prog['id']."</td>\n\t\t<td>".$prog['nome']."</td>";
 				echo "<td>".$prog['descrizione']."</td>\n\t\t<td>".$prog['datainizio']."</td>\n\t<td>".$prog['datafine']."</td>\n\t</tr>";
 			}
-			echo "\n\t<tr>\n\t\t<td></td>\n\t\t<td> <input type=\"text\" name=\"nomeProg\"> </td>\n\t\t<td> <input type=\"text\" name=\"descr\"> </td>";
+			echo "\n\t<tr>\n\t\t<td></td>\n\t\t<td> <input type=\"text\" name=\"nomeProg\" maxlength=\"50\"> </td>\n\t\t<td> <input type=\"text\" name=\"descr\" maxlength=\"250\"> </td>";
 			echo "<td> <input type=\"datetime-local\" id=\"inizioProg\" name=\"dataini\"> </td>\n\t\t<td> <input type=\"datetime-local\" id=\"inizioProg\" name=\"datafin\"> </td>\n\t</tr>";
 			echo '</table>';
 			echo "<input type=\"submit\" value=\"Aggiungi progetto\">";
