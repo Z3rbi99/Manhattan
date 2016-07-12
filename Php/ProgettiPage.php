@@ -4,7 +4,7 @@
 		<title>Progetti</title>
 	</head>
 	<body>
-			<form method=\"get\"action=\"Progetti.php\">
+			<form method="get"action="ProgettiPage.php">
 		<?php	if(isset($_GET['passavar'])) {
 						
 					if(!$queryprogetti = @pg_query("select * from PROGETTI"))

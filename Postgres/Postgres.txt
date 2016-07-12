@@ -14,3 +14,11 @@ CREATE TABLE PROGETTI
    DataInizio timestamp,
    DataFine timestamp
 );
+
+
+CREATE TABLE LOGIN
+(
+   ID serial,
+   Username character varying(50),
+   Password character varying(50)
+);

@@ -5,7 +5,7 @@
 	</head>
 	<body>
 			<form method="get" action="PersonePage.php">
-		<?php	if(isset($passavar1)&&$passavar1!="") {
+		<?php	if(isset($passavar1) and $passavar1!="") {
 			
 					if(!$querypersone = @pg_query("select * from PERSONE")) 
 						die("Errore nella query: " . pg_last_error($conn));	?>
@@ -34,7 +34,7 @@
 						</tr>
 					</table>
 					<input type="submit" value="Aggiungi persona">
-		<?php 	} else }	?>
+		<?php 	} else {	?>
 					<input type="submit" value="Mostra persone">
 		<?php 	} ?>
 				<input hidden name="passavar1" value="mostratabella">
