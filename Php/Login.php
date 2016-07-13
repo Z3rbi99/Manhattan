@@ -27,6 +27,5 @@ session_start();
 					echo "L'username e la password non corrispondono.";
 				else
 					$_SESSION['login'] = true;
-		}
-		
+		}	
 ?>

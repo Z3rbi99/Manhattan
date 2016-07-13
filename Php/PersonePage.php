@@ -16,6 +16,7 @@
 							<td><b>Id</b></td>
 							<td><b>Nome</b></td>
 							<td><b>Cognome</b></td>
+							<td><b>Email</b></td>
 						</tr>
 							
 		<?php		if (count($_GET)>0){
@@ -24,6 +25,7 @@
 								<td><?php echo $pers['id']; ?></td>
 								<td><?php echo $pers['nome']; ?></td>
 								<td><?php echo $pers['cognome']; ?></td>
+								<td><?php echo $pers['email']; ?></td>
 							</tr>
 		<?php 		}	} 	?>
 		
