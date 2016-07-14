@@ -5,11 +5,11 @@
 	</head>
 	<body>
 			<form method="get"action="ProgettiPage.php">
-		<?php	if(isset($_GET['passavar'])) {
-						
-					if(!$queryprogetti = @pg_query("select * from PROGETTI"))
-						die("Errore nella query: " . pg_last_error($conn));	?>
-			
+		<?php	if (isset($_GET['passavar'])) {
+
+					if (!$queryprogetti = @pg_query("select * from PROGETTI"))
+						die ("Errore nella query: " . pg_last_error($conn));	?>
+
 					<table border="1" cellspacing="2" cellpadding="2">
 						<tr>
 							<td><b>Id</b></td>
@@ -19,7 +19,7 @@
 							<td><b>Data Fine</b></td>
 						</tr>
 		<?php		if (count($_GET)>0){
-						while($prog = pg_fetch_assoc($queryprogetti)){ ?>
+						while ($prog = pg_fetch_assoc($queryprogetti)){ ?>
 							<tr>
 								<td><?php echo $prog['id'] ?></td>
 								<td><?php echo $prog['nome'] ?></td>
@@ -28,7 +28,7 @@
 								<td><?php echo $prog['datafine'] ?></td>
 							</tr>
 		<?php		} 	}	?>
-		
+
 						<tr>
 							<td></td>
 							<td> <input type="text" name="nomeProg" maxlength="50"> </td>

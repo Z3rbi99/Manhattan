@@ -5,12 +5,12 @@
 	</head>
 	<body>
 			<form method="get" action="PersonePage.php">
-		<?php	if(isset($passavar1) and $passavar1!="") {
-			
-					if(!$querypersone = @pg_query("select * from PERSONE")) 
-						die("Errore nella query: " . pg_last_error($conn));	?>
-						
-						
+		<?php	if (isset($passavar1) and $passavar1!="") {
+
+					if (!$querypersone = @pg_query("select * from PERSONE"))
+						die ("Errore nella query: " . pg_last_error($conn));	?>
+
+
 					<table border="1" cellspacing="2" cellpadding="2">
 						<tr>
 							<td><b>Id</b></td>
@@ -18,9 +18,9 @@
 							<td><b>Cognome</b></td>
 							<td><b>Email</b></td>
 						</tr>
-							
-		<?php		if (count($_GET)>0){
-						while($pers = pg_fetch_assoc($querypersone)){	?>
+
+		<?php		if (count($_GET)>0) {
+						while ($pers = pg_fetch_assoc($querypersone)) {	?>
 							<tr>
 								<td><?php echo $pers['id']; ?></td>
 								<td><?php echo $pers['nome']; ?></td>
@@ -28,7 +28,7 @@
 								<td><?php echo $pers['email']; ?></td>
 							</tr>
 		<?php 		}	} 	?>
-		
+
 						<tr>
 							<td></td>
 							<td> <input type="text" name="nome" maxlength="50"> </td>
