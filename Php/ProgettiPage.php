@@ -1,11 +1,16 @@
 <html>
 	<head>
-		<?php include "Progetti.php" ?>
+		<?php include "Progetti.php";
+		 			include('utils.inc.php');?>
 		<title>Progetti</title>
 	</head>
 	<body>
+		<?php	if (isLogged()) {?>
 			<form method="get"action="ProgettiPage.php">
-		<?php	if (isset($_GET['passavar'])) {
+		<?php
+
+
+			if (isset($_GET['passavar'])) {
 
 					if (!$queryprogetti = @pg_query("select * from PROGETTI"))
 						die ("Errore nella query: " . pg_last_error($conn));	?>
@@ -43,5 +48,6 @@
 		<?php	}	?>
 				<input hidden name="passavar" value="mostratabella">
 		</form>
+	<?php	} ?>
 	</body>
 </html>

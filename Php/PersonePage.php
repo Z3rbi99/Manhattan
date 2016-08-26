@@ -1,9 +1,11 @@
 <html>
 	<head>
-		<?php include "Persone.php" ?>
+		<?php include "Persone.php";
+		 			include('utils.inc.php'); ?>
 		<title>Persone</title>
 	</head>
 	<body>
+		<?php	if (isLogged()) {?>
 			<form method="get" action="PersonePage.php">
 		<?php	if (isset($passavar1) and $passavar1!="") {
 
@@ -41,5 +43,6 @@
 		<?php 	} ?>
 				<input hidden name="passavar1" value="mostratabella">
 			</form>
+		<?php	} ?>
 	</body>
 </html>

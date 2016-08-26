@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = @pg_connect('dbname=postgres user=postgres password=iacopo');
 
 if (isset($_GET['nomeProg']) and $_GET['nomeProg']!="")
@@ -28,4 +29,5 @@ if(isset($nomeProg)&&$nomeProg!="") {
 }
 if(isset($_GET['nomeProg']) and $_GET['nomeProg']=="")
 	echo "Devi inserire almeno il nome del progetto.";
+
 ?>

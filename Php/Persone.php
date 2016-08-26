@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = @pg_connect('dbname=postgres user=postgres password=iacopo');
 
 if (isset($_GET['nome']) and $_GET['nome']!="")
@@ -21,4 +22,6 @@ if (isset($nome) and $nome!="") {
 
 if (isset($_GET['nome']) and $_GET['nome']=="")
 	echo "Devi riempire tutti i campi.";
+
+
 ?>
