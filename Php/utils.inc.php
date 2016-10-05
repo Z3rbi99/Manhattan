@@ -7,10 +7,10 @@
  * @return array
  */
 
-function effettua_login($login,$password) {
-    $login=pg_escape_string($login);
+function effettua_login($username,$password) {
+    $username=pg_escape_string($username);
     $password=pg_escape_string($password);
-    $rs= @pg_query("select * from LOGIN where login.username='".$login."' and login.password='".$password."' limit 1");
+    $rs= @pg_query("select * from LOGIN where login.username='".$username."' and login.password='".$password."' limit 1");
     return (array) pg_fetch_assoc($rs);
 }
 
@@ -30,6 +30,10 @@ function login($info){
  * @return array|null
  */
 function isLogged(){
-    return $_SESSION['my_test_loggedin'];
+  if(isset($_SESSION['my_test_loggedin'])&&$_SESSION['my_test_loggedin']!="")
+    return true;
+  else {
+    return false;
+    }
 }
 ?>

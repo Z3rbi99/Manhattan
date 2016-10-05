@@ -1,21 +1,32 @@
 <html>
   <head>
-  <?php include "Home.php"; ?>
+  <?php
+  session_start();//avvia la sessione
+  include('utils.inc.php');
+  if (isLogged()) {
+  } ?>
     <title>Home</title>
   </head>
   <body>
-    <?php	include('utils.inc.php');
-    
+    <?php
     if (isLogged()) { ?>
-      <form method="get" action="DestroyAndUnsetSession.php">
-          <button type="submit">Logout</button>
+      <form method="post" action="DestroyAndUnsetSession.php">
+        <button type="submit">Logout</button>
       </form>
-      <form method="get" action="ProgettiPage.php">
+
+      <form method="post" action="ProgettiPage.php">
         <button type="submit">Progetti</button>
       </form>
-      <form method="get" action="PersonePage.php">
+
+      <form method="post" action="PersonePage.php">
         <button type="submit">Persone</button>
       </form>
+    <?php }
+  else { ?>
+    <script language="JavaScript" type="text/javascript">
+      location.href = "LoginPage.php";
+      windows.location.reload();
+    </script>
     <?php } ?>
   </body>
 </html>

@@ -1,7 +1,8 @@
 <html>
 	<head>
+		<script type="text/javascript" src="../lib/jquerymin.js"></script>
+		<script type="text/javascript" src="../lib/functions_cryptography.js"></script>
 		<script type="text/javascript" src="../Js/RegistrazioneFunctions.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<title>Registrazione</title>
 	</head>
 	<body>
@@ -26,6 +27,7 @@
 				<input type="text" name="email" id="email" onfocus="focusFunction(this)"><br>
 
 				<div id="risultato"></div>
+
 
 				<input type="button" value="Registrati" onclick="checkEmptyInputAndBlur(event)"> oppure
 				<a href="LoginPage.php">Accedi</a><br>

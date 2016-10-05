@@ -1,17 +1,14 @@
 <html>
 	<head>
-		<?php include "Persone.php";
+		<?php include ('Persone.php');
 		 			include('utils.inc.php'); ?>
 		<title>Persone</title>
 	</head>
 	<body>
 		<?php	if (isLogged()) {?>
-			<form method="get" action="PersonePage.php">
-		<?php	if (isset($passavar1) and $passavar1!="") {
-
-					if (!$querypersone = @pg_query("select * from PERSONE"))
+			<form method="post" action="PersonePage.php">
+		<?php if (!$querypersone = @pg_query("select * from PERSONE"))
 						die ("Errore nella query: " . pg_last_error($conn));	?>
-
 
 					<table border="1" cellspacing="2" cellpadding="2">
 						<tr>
@@ -21,28 +18,40 @@
 							<td><b>Email</b></td>
 						</tr>
 
-		<?php		if (count($_GET)>0) {
-						while ($pers = pg_fetch_assoc($querypersone)) {	?>
+		<?php 	while ($pers = pg_fetch_assoc($querypersone)) {	?>
 							<tr>
-								<td><?php echo $pers['id']; ?></td>
-								<td><?php echo $pers['nome']; ?></td>
-								<td><?php echo $pers['cognome']; ?></td>
-								<td><?php echo $pers['email']; ?></td>
+								<td><?php echo htmlspecialchars($pers['id']); ?></td>
+								<td><?php echo htmlspecialchars($pers['nome']); ?></td>
+								<td><?php echo htmlspecialchars($pers['cognome']); ?></td>
+								<td><?php echo htmlspecialchars($pers['email']); ?></td>
 							</tr>
-		<?php 		}	} 	?>
-
+		<?php 	}	 	?>
 						<tr>
 							<td></td>
 							<td> <input type="text" name="nome" maxlength="50"> </td>
 							<td> <input type="text" name="cogn" maxlength="50"> </td>
+							<td> <input type="text" name="mail" maxlength="50"> </td>
 						</tr>
 					</table>
 					<input type="submit" value="Aggiungi persona">
-		<?php 	} else {	?>
-					<input type="submit" value="Mostra persone">
-		<?php 	} ?>
-				<input hidden name="passavar1" value="mostratabella">
 			</form>
-		<?php	} ?>
+		<?php	}  else {  ?>
+				<script language="JavaScript" type="text/javascript">
+					location.href = "LoginPage.php";
+					windows.location.reload();
+				</script>
+				<?php	}?>
+		<script>
+		history.replaceState(null, document.title, location.pathname+"#!/stealingyourhistory");
+    history.pushState(null, document.title, location.pathname);
+
+    window.addEventListener("popstate", function() {
+      if(location.hash === "#!/stealingyourhistory") {
+            history.replaceState(null, document.title, location.pathname);
+            setTimeout(function(){
+              location.replace("HomePage.php");
+            },0);
+      }
+    }, false); </script>
 	</body>
 </html>

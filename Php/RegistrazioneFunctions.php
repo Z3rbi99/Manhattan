@@ -1,55 +1,26 @@
 <?php
-//phpinfo();
-//echo json_encode('ciao bello');
-
-/*
-if(isset( $_GET["nome"]))
-	$nomePost = $_GET["nome"];
-if(isset( $_GET["cognome"]))
-	$cognomePost = $_GET["cognome"];
-	if(isset( $_POST["nome"]))
-		$nomePost = $_POST["nome"];
-	if(isset( $_POST["cognome"]))
-		$cognomePost = $_POST["cognome"];
-*/
-//echo $nomePost;
-
 $conn = @pg_connect('dbname=postgres user=postgres password=iacopo');
 if(!$conn) {
 	die('Connessione fallita !<br />');
 }
+$_SESSION['my_test_loggedin']="session_set";
+include('SecurityFunctions.php');
 
 
-if ((checkFullInput($_GET['nome']) &&
-		checkFullInput($_GET['cognome']) &&
-		checkFullInput($_GET['username']) &&
-		checkFullInput($_GET['password1']) &&
-		checkFullInput($_GET['email']) &&
-		userNotInDataBase($_GET['username']) &&
-		emailNotInDataBase($_GET['email']) &&
-		passwordUguali($_GET['password1'], $_GET['password2'])) ) {
+if (checkFullInput(strip_tags($_POST['nome'])) &&
+		checkFullInput(strip_tags($_POST['cognome'])) &&
+		checkFullInput(strip_tags($_POST['username'])) &&
+		checkFullInput(strip_tags($_POST['password1'])) &&
+		checkFullInput(strip_tags($_POST['email'])) &&
+		userNotInDataBase(strip_tags($_POST['username'])) &&
+		emailNotInDataBase(strip_tags($_POST['email'])) &&
+		passwordUguali(strip_tags($_POST['password1']), (strip_tags($_POST['password2'])))) {
 
-			insertDatiRegistrazione($_GET['nome'], $_GET['cognome'], $_GET['username'], $_GET['password1'], $_GET['email']);
+			insertDatiRegistrazione(strip_tags($_POST['nome']), strip_tags($_POST['cognome']), strip_tags($_POST['username']), strip_tags($_POST['password1']), strip_tags($_POST['email']));
 }
-
-/*
-funcion check(){
-	$ok = false;
-	$message = '';
-	if(!checkFullInput($_POST['nome'])){
-		$ok = true;
-		$message = 'Errore nome';
-	}
-	if(!checkFullInput($_POST['cognome']))
-		$ok = true;
-	if(!checkFullInput($_POST['cognome']))
-		$ok = true;
-
-}
-*/
 
 function checkFullInput($input) {
-  if (isset($input) and $input != ""){
+  if (isset($input) and $input != "" and sqlInjection($input)) {
     return true;
   } else {
     return false;
@@ -61,10 +32,10 @@ function userNotInDataBase($user) {
 		die ("Errore nella query: " . pg_last_error($conn));
 	} else {
 		while ($userUnivoco = pg_fetch_assoc($queryUserUnivoco)) {
-			if ($userUnivoco['count'] == "0") {
+			if ($userUnivoco['count'] == 0) {
         return true;
       } else {
-				echo "Username già presente";
+				echo "Questo username è già stato usato.";
         return false;
       }
     }
@@ -82,7 +53,7 @@ function emailNotInDataBase($email) {
 			if ($emailUnivoca['conteggio'] == 0) {
         $controllo = true;
       } else {
-				$messaggio = "Email già collegata ad un altro account";
+				$messaggio = "Questa email è collegata ad un altro account.";
       }
     }
 		if($messaggio!="")
@@ -102,12 +73,13 @@ function passwordUguali($pwd1, $pw2) {
 
 
 function insertDatiRegistrazione($nome, $cognome, $username, $password, $email) {
-  if (!$queryInsertDatiRegistrazioneLogin = @pg_query("insert into LOGIN (Username, Password) values ('".$username."','".$password."');")) {
-		die ("Errore nella query: " . pg_last_error($conn));
-  }
-  if (!$queryInsertDatiRegistrazionePersone = @pg_query("insert into PERSONE (Nome, Cognome, Email, Username) values ('".$nome."','".$cognome."','".$email."','".$username."');")) {
+
+  if (!$queryInsertDatiRegistrazionePersone = @pg_query("insert into PERSONE (Nome, Cognome, Username, Email) values ('".$nome."','".$cognome."','".$username."','".$email."');")) {
     die ("Errore nella query: " . pg_last_error($conn));
   }
+	if (!$queryInsertDatiRegistrazioneLogin = @pg_query("insert into LOGIN (Username, Password) values ('".$username."','".$password."');")) {
+		die ("Errore nella query: " . pg_last_error($conn));
+	}
 	echo "Registrazione avvenuta correttamente";
 }
 ?>

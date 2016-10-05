@@ -1,18 +1,12 @@
 <?php
 session_start();
 
+session_unset();
+
 session_destroy();
-
-
-unset($_SESSION[]);
-
-  <script language="JavaScript" type="text/javascript">
-    location.href = "LoginPage.php";
-    windows.location.reload();
-  </script>
-
-
-
-
-
 ?>
+
+<script language="JavaScript" type="text/javascript">
+  location.href = "LoginPage.php";
+  windows.location.reload();
+</script>

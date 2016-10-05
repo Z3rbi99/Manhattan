@@ -23,18 +23,16 @@ function checkPass() {
 function checkPW2() {
   var password2 = document.forms["registrazione"]["password2"].value;
 
-  if (password2 != "")
+  if (password2.value != "")
     checkPass()
 }
 
 
 function checkEmptyInput(event) {
-//  alert('ciao');
+//  Funzione che restituisce FALSE se i campi sono valorizzati, TRUE se manca qualche campo
   var nome = document.forms["registrazione"]["nome"].value;
   var cognome = document.forms["registrazione"]["cognome"].value;
   var username = document.forms["registrazione"]["username"].value;
-  var password1 = document.forms["registrazione"]["password1"].value;
-  var password2 = document.forms["registrazione"]["password2"].value;
   var email = document.forms["registrazione"]["email"].value;
 
   var message = document.getElementById('emptyMessage');
@@ -57,7 +55,7 @@ function checkEmptyInput(event) {
     document.getElementById("username").style.backgroundColor = empty;
     avviso = true;
   }
-  if (password1 == null || password1 == "") {
+  if (document.forms["registrazione"]["password1"].value == null || document.forms["registrazione"]["password1"].value == "") {
     event.preventDefault();
     document.getElementById("password1").style.backgroundColor = empty;
     avviso = true;
@@ -75,55 +73,48 @@ function checkEmptyInput(event) {
     message.innerHTML = "Devi riempire tutti i campi."
   }
     return avviso;
-    //controlloDB();
 }
-
-
-/* VERSIONI JAVASCRIPT SENZA jQuery
-function receiveResponse(state)
-{
-    if (state.readyState == 4)
-    {
-        // xhr.readyState == 4, so we've received the complete server response
-        if (state.status == 200)
-        {
-            // xhr.status == 200, so the response is good
-            var response = state.responseXML;
-            console.log(response);
-            document.getElementById("risultato").innerHTML = response;
-        }
-    }else{
-        console.log(state.readyState);
-    }
-}
-
-
-function controlloDB() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "RegistrazioneFunctions.php", true);
-  xhttp.onreadystatechange = function(){
-    receiveResponse(xhttp);
-//    console.log(xhttp);
-  };
-  xhttp.send("nome="+document.getElementById('nome').value+"&cognome="+document.getElementById('cognome').value);
-
-//  function() {
-//    if (xhttp.readyState == 4 && xhttp.status == 200) {
-//      document.getElementById("risultato").innerHTML = xhttp.responseText;
-//    }
-//  };
-//  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-}*/
 
 
 function checkEmptyInputAndBlur(event) {
-  //checkEmptyInput(event);
+  var crypt = new Crypt();
+  var password1 = crypt.HASH.sha512(document.forms["registrazione"]["password1"].value.toString());
+  var password2 = crypt.HASH.sha512(document.forms["registrazione"]["password2"].value.toString());
+
+  var para1 = document.createElement("input");
+  para1.setAttribute("id", "inp1");
+  para1.setAttribute("type", "hidden");
+
+  var para2 = document.createElement("input");
+  para2.setAttribute("id", "inp2");
+  para2.setAttribute("type", "hidden");
+
+  var element = document.getElementById("registrazione");
+  element.appendChild(para1);
+  element.appendChild(para2);
+
+
+  $( "#inp1" ).val(password1);
+  $( "#inp2" ).val(password2);
+
+
   if(setBlurListener(event)){
-    $.get( "RegistrazioneFunctions.php", { nome: $( "#nome" ).val(), cognome: $( "#cognome" ).val(), username: $( "#username" ).val(), password1: $( "#password1" ).val(), password2: $("#password2").val(), email: $( "#email" ).val() })
+    var param = {
+        "nome": $( "#nome" ).val(),
+        "cognome": $( "#cognome" ).val(),
+        "username": $( "#username" ).val(),
+        "password1": $("#inp1").val(),
+        "password2": $("#inp2").val(),
+        "email": $( "#email" ).val()
+      };
+
+    $.post("RegistrazioneFunctions.php", param)
       .done(function( data ) {
-          alert( "Risposta: " + data );
+        alert( "Risposta: " + data );
+        if (data == "Registrazione avvenuta correttamente")
+          window.location.href = "../Php/LoginPage.php";
         })
-  }else{
+  } else {
       alert("Errore di qualche tipo");
   }
 }
@@ -132,19 +123,14 @@ function checkEmptyInputAndBlur(event) {
 function setBlurListener(event){
   var inputs = document.getElementsByTagName('input');
   var result = false;
+  var jac = false;
   for (index = 0; index < inputs.length; ++index) {
-    if(inputs[index].getAttribute("type")!="submit"){
-
-      var ciao = inputs[index].addEventListener("blur", function() {
-                  if(!checkEmptyInput(event)){
-                    result = true;
-                    return result;
-                  }
-      });
-      alert('setblurList result'+ciao);
+    if(inputs[index].getAttribute("type")!="button"){
+      if(!checkEmptyInput(event)){
+          result = true;
+      }
     }
   }
-
   return result;
 }
 

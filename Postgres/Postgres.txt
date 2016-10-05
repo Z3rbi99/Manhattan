@@ -1,10 +1,11 @@
 CREATE TABLE PERSONE
 (
    ID serial,
-   Nome character varying(50),
-   Cognome character varying(50),
-   Email character varying(50),
-   Username character varying(50)
+   Nome character varying(250),
+   Cognome character varying(250),
+   Username character varying(250),
+   Email character varying(250)
+
 );
 
 
@@ -12,8 +13,8 @@ CREATE TABLE PERSONE
 CREATE TABLE LOGIN
 (
    ID serial,
-   Username character varying(50),
-   Password character varying(50)
+   Username character varying(250),
+   Password character varying(250)
 );
 
 
@@ -21,8 +22,8 @@ CREATE TABLE LOGIN
 CREATE TABLE PROGETTI
 (
    ID serial,
-   Nome character varying(50),
-   Descrizione character varying(250),
+   Nome character varying(250),
+   Descrizione character varying(500),
    DataInizio timestamp,
    DataFine timestamp
 );
